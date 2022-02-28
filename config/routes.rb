@@ -43,4 +43,8 @@ Rails.application.routes.draw do
   get("/delete_comment/:the_comment_id", { :controller => "comments", :action => "destroy"})
 
   get("/user_sign_up/", {:controller => "users", :action => "sign_up"})
+  get("/user_sign_out/", {:controller => "users", :action => "sign_out"})
+  get("/user_sign_in", {:controller => "users", :action => "sign_in"})
+  post("/verify_credentials", {:controller => "users", :action => "authenticate"})
+  
 end
