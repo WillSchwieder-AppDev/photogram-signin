@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     save_status = user.save
 
     if save_status == true
+      session.store(:user_id, user_id)
       redirect_to("/users/#{user.username}", { :notice => "Welcome, " + user.username + "!" })
     else
       redirect_to("/user_sign_up", { :alert => user.errors.full_messages})
