@@ -16,22 +16,23 @@ class UsersController < ApplicationController
     user = User.new
 
     user.username = params.fetch("input_username")
+    user.password = params.fetch("input_password")
+    user.password_confirmation = params.fetch("input_password_confirmation")
 
-    user.save
+    save_status = user.save
 
-    redirect_to("/users/#{user.username}")
+    if save_status == true
+      redirect_to("/users/#{user.username}", { :notice => "Welcome, " + user.username + "!" })
+    else
+      redirect_to("/user_sign_up", { :alert => user.errors.full_messages})
+    end
   end
 
   def update
     the_id = params.fetch("the_user_id")
     user = User.where({ :id => the_id }).at(0)
 
-
     user.username = params.fetch("input_username")
-
-    user.save
-    
-    redirect_to("/users/#{user.username}")
   end
 
   def destroy
@@ -43,4 +44,7 @@ class UsersController < ApplicationController
     redirect_to("/users")
   end
 
+  def sign_up
+    render({ :template => "users/signup_form.html.erb" })
+  end
 end
